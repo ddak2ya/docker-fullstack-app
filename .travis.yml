@@ -14,7 +14,7 @@ after_success:
   - docker build -t ddak2ya/docker-backend ./backend
   - docker build -t ddak2ya/docker-nginx ./nginx
 
-  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB-ID" --password-stdin
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
   - docker push ddak2ya/docker-frontend
   - docker push ddak2ya/docker-backend
