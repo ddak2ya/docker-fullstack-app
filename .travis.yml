@@ -1,0 +1,22 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t ddak2ya/react-test-app -f ./fontend/Dockerfile.dev ./frontend
+
+script:
+  - docker run -e CI=true ddak2ya/react-test-app npm run test
+
+after_success:
+  - docker build -t ddak2ya/docker-frontend ./frontend
+  - docker build -t ddak2ya/docker-backend ./backend
+  - docker build -t ddak2ya/docker-nginx ./nginx
+
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB-ID" --password-stdin
+
+  - docker push ddak2ya/docker-frontend
+  - docker push ddak2ya/docker-backend
+  - docker push ddak2ya/docker-nginx
+
